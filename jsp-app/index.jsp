@@ -1,0 +1,38 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %><!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de contactos | Biblioteca UNCP – FIS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="card" aria-labelledby="page-title">
+      <header class="identity">
+        <img class="identity__image" src="assets/img/Fis.png" alt="Emblema de la Facultad de Ingeniería de Sistemas de la UNCP" width="150" height="150">
+        <div>
+          <p class="identity__faculty">Facultad de Ingeniería de Sistemas</p>
+          <h1 id="page-title">Biblioteca UNCP – FIS</h1>
+          <p class="subtitle">Registro de contactos</p>
+        </div>
+      </header>
+      <div class="card__body">
+        <p>Deja tus datos para registrar tu contacto con la biblioteca.</p>
+        <form action="registro.jsp" method="post" accept-charset="UTF-8">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="100" required>
+          </div>
+          <div class="field">
+            <label for="correo">Correo</label>
+            <input id="correo" name="correo" type="email" autocomplete="email" maxlength="254" required>
+          </div>
+          <button type="submit">Registrar contacto</button>
+        </form>
+        <p class="note">Los registros se conservan temporalmente durante tu sesión</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

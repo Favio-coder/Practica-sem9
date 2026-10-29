@@ -1,6 +1,6 @@
 # Contrato funcional compartido — PHP y JSP
 
-Este contrato guía ambas implementaciones; `registro.php` está implementado en fase 2 y `registro.jsp` queda para fase 3.
+Este contrato guía ambas implementaciones; `registro.php` se implementó en fase 2 y `registro.jsp` en fase 3 (publicación en el Tomcat principal aún pendiente).
 
 | Aspecto | Comportamiento acordado |
 | --- | --- |
@@ -15,4 +15,4 @@ Este contrato guía ambas implementaciones; `registro.php` está implementado en
 | Equivalencia | Mismo comportamiento observable, estados HTTP y política de validación en ambas aplicaciones |
 | Fallos inesperados | HTTP 500 sin mostrar trazas al usuario; pruebas 500 controladas, sin endpoints inseguros persistentes para provocarlos |
 
-La consigna usa `registro.*` y el ejemplo usa `procesar.*`: se adopta **`registro.php` / `registro.jsp`** por consistencia. Política concretada en fase 2 para repetir en JSP: recortar espacios en los extremos; nombre de 1 a 100 caracteres UTF-8, sin controles; correo no vacío de hasta 254 caracteres UTF-8 y válido como dirección electrónica; rechazar campos ausentes o arrays. Véase `docs/fase-02-php.md`.
+La consigna usa `registro.*` y el ejemplo usa `procesar.*`: se adopta **`registro.php` / `registro.jsp`** por consistencia. Política común: recortar espacios en los extremos; nombre de 1 a 100 caracteres UTF-8, sin controles; correo no vacío de hasta 254 caracteres UTF-8 y válido como dirección electrónica; rechazar campos ausentes o en forma de arrays (`nombre[]`, `correo[]` en JSP). JSP también rechaza parámetros duplicados y cualquier clave inesperada. PHP usa `FILTER_VALIDATE_EMAIL`; JSP usa una expresión regular básica sin dependencias: comparten los casos probados pero no todos los correos posibles (véanse `docs/fase-02-php.md` y `docs/fase-03-jsp.md`).
