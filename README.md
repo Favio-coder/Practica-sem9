@@ -1,14 +1,14 @@
-# Laboratorio 09 — Sistema de Registro de Contacto
+# Laboratorio 09 — Biblioteca UNCP – FIS
 
 **Autor:** Richard Favio Asturimac Medina (Ingeniería de Sistemas, UNCP).
 
-Dos implementaciones del mismo registro de contacto: PHP sobre Apache nativo y JSP sobre Tomcat. Los requisitos acordados son formulario de nombre y correo, envío POST, validación del lado del servidor, almacenamiento temporal por sesión, tabla de registros y comportamiento HTTP comparable. Se documentarán el ciclo HTTP, la seguridad básica, las pruebas y la matriz comparativa PHP vs JSP.
+Registro de contactos de la **Facultad de Ingeniería de Sistemas**: nombre y correo. La implementación PHP funciona con Apache; la implementación JSP sobre Tomcat corresponde a una fase posterior. Sin base de datos ni autenticación.
 
 ## Estado
 
-**Fase 1 parcialmente completada:** estructura y contrato preparados; diagnóstico local realizado, con verificaciones de permisos pendientes en [docs/entorno.md](docs/entorno.md). No hay formulario ni lógica de registro en este proyecto. Proyectos preexistentes en `/var/www/html/lab09-php` y `/var/lib/tomcat10/webapps/lab09-jsp` se conservan.
+**Fase 2 implementada en el repositorio y probada en Apache aislado; publicación permanente pendiente por permisos.** Se comprobaron los archivos existentes de fase 1 (`docs/entorno.md`, `docs/fases.md`, `docs/contrato-funcional.md`, estructura y script); persisten las verificaciones de entorno pendientes allí anotadas. Las aplicaciones preexistentes en `/var/www/html/lab09-php` y `/var/lib/tomcat10/webapps/lab09-jsp` no se tocaron.
 
-Entorno verificado el 2026-10-29 (America/Lima): Linux Mint 22.2; Apache 2.4.58 activo y HTTP 200 en puerto 80; Tomcat 10.1.55 activo y HTTP 200 en puerto 8080; Java 21.0.12.1; PHP CLI 8.3.6 y módulo Apache `php_module` con controlador PHP 8.3. Apache usa el VirtualHost por defecto y `/var/www/html`; Tomcat usa `CATALINA_BASE=/var/lib/tomcat10`. Quedan pendientes la atribución privilegiada de procesos a los sockets, la lectura de `appBase` de Tomcat y una prueba HTTP de ejecución PHP; véase [entorno.md](docs/entorno.md). La disponibilidad del módulo no sustituye una prueba HTTP de ejecución PHP.
+Entorno documentado en fase 1: Linux Mint 22.2; Apache 2.4.58 en puerto 80 y DocumentRoot `/var/www/html`; Tomcat en puerto 8080; PHP 8.3.6 y módulo Apache `php_module`. En fase 2 se confirmó ejecución PHP por HTTP en Apache (puerto 80, aplicación previa; puerto 18080, código nuevo). Quedan pendientes la atribución privilegiada de sockets y la lectura de `appBase` de Tomcat; véase [entorno.md](docs/entorno.md).
 
 > Se usa Apache nativo en vez de XAMPP; confirmar su aceptación con el docente.
 
@@ -16,32 +16,27 @@ Entorno verificado el 2026-10-29 (America/Lima): Linux Mint 22.2; Apache 2.4.58 
 
 ```text
 lab09-contactos/
-├── php-app/.gitkeep
-├── jsp-app/.gitkeep
+├── php-app/{index.html,registro.php,styles.css,assets/img/Fis.png}
+├── jsp-app/assets/img/Fis.png
 ├── docs/
 │   ├── fases.md
 │   ├── entorno.md
 │   ├── contrato-funcional.md
+│   ├── fase-02-php.md
 │   └── evidencias/.gitkeep
 ├── scripts/diagnostico.sh
 ├── README.md
 └── .gitignore
 ```
 
-`bash scripts/diagnostico.sh` repite comprobaciones de solo lectura sin solicitar sudo. Para las comprobaciones pendientes, seguir los comandos acotados de `docs/entorno.md`. Plan y responsabilidades: [docs/fases.md](docs/fases.md); respuestas HTTP y validación: [docs/contrato-funcional.md](docs/contrato-funcional.md).
+`bash scripts/diagnostico.sh` repite comprobaciones de solo lectura sin solicitar sudo. Para las comprobaciones pendientes, seguir `docs/entorno.md`. Plan: [docs/fases.md](docs/fases.md); contrato HTTP: [docs/contrato-funcional.md](docs/contrato-funcional.md).
 
-## Despliegue (pendiente)
+## PHP: despliegue y pruebas
 
-Documentar rutas, permisos de despliegue y URLs de ambas implementaciones tras confirmar las rutas necesarias.
+El código fuente está en `php-app/`. En una sesión con permisos de administración, publicarlo en un directorio **nuevo** `/var/www/html/lab09-contactos-php/` sin modificar `/var/www/html/lab09-php/`; luego abrir `http://localhost:80/lab09-contactos-php/index.html`. Esta URL permanente **aún no está verificada**: `/var/www/html` pertenece a root y `sudo -n` pidió contraseña.
 
-## Pruebas (pendiente)
+La URL `http://127.0.0.1:18080/index.html` **sí respondió 200** durante las pruebas en una instancia local aislada de Apache que sirve `php-app/` directamente (puerto temporal distinto del sitio permanente). Su disponibilidad depende de que esa instancia siga en ejecución. Pasos de publicación, comandos de prueba, resultados y pendientes: [docs/fase-02-php.md](docs/fase-02-php.md).
 
-Documentar casos HTTP, sesiones, validación y evidencias sin publicar datos privados.
+El formulario envía `POST` a `registro.php`; PHP valida los datos antes de abrir la sesión, agrega el contacto en `$_SESSION['registros']` y muestra la tabla escapando los datos al generar HTML. Las entradas inválidas reciben 400; métodos distintos de POST reciben 405 con `Allow: POST`.
 
-## Ciclo HTTP (pendiente)
-
-Explicar petición, procesamiento, sesión y respuesta para PHP y JSP.
-
-## Comparativa PHP vs JSP (pendiente)
-
-Completar matriz comparativa basada en las dos implementaciones y sus pruebas.
+La revisión visual, las capturas de pantalla, la publicación permanente y la comparativa con JSP quedan para las fases correspondientes.
