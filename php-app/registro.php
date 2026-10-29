@@ -52,6 +52,29 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
+// PHP normaliza los escalares repetidos en $_POST. En el formulario URL-encoded
+// se revisan las claves originales para rechazar duplicados y campos inesperados.
+$tipoContenido = $_SERVER['CONTENT_TYPE'] ?? '';
+if (preg_match('~^application/x-www-form-urlencoded(?:\s*;|\s*$)~i', $tipoContenido)) {
+    $cuerpo = file_get_contents('php://input');
+    if ($cuerpo === false) {
+        http_response_code(500);
+        mostrarPagina('Error del servicio', '<div role="alert" class="message"><h2>Servicio no disponible</h2><p>Inténtalo de nuevo más tarde.</p></div>');
+        exit;
+    }
+
+    $clavesVistas = [];
+    foreach (explode('&', $cuerpo) as $segmento) {
+        $clave = urldecode(explode('=', $segmento, 2)[0]);
+        if (($clave !== 'nombre' && $clave !== 'correo') || isset($clavesVistas[$clave])) {
+            http_response_code(400);
+            mostrarPagina('Datos inválidos', '<div role="alert" class="message"><h2>Datos inválidos</h2><p>Ingresa un nombre y un correo válidos, sin campos repetidos.</p></div>');
+            exit;
+        }
+        $clavesVistas[$clave] = true;
+    }
+}
+
 // FILTER_REQUIRE_SCALAR rechaza nombre[] y correo[] sin convertirlos en cadenas.
 $nombre = filter_input(INPUT_POST, 'nombre', FILTER_UNSAFE_RAW, FILTER_REQUIRE_SCALAR);
 $correo = filter_input(INPUT_POST, 'correo', FILTER_UNSAFE_RAW, FILTER_REQUIRE_SCALAR);

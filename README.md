@@ -6,7 +6,7 @@ Registro de contactos de la **Facultad de Ingeniería de Sistemas**: nombre y co
 
 ## Estado
 
-**Fase 3 JSP implementada en el repositorio y probada con Tomcat aislado; publicación en Tomcat principal pendiente por permisos y lectura de `appBase`.** La fase 2 PHP sigue accesible en el Apache aislado. Las aplicaciones previas en `/var/www/html/lab09-php` y `/var/lib/tomcat10/webapps/lab09-jsp` se conservaron.
+**Fase 4 QA ejecutada en los servidores temporales:** matriz PHP/JSP, revisión visual real, pruebas 500 aisladas y evidencias en [docs/pruebas.md](docs/pruebas.md). Se corrigió en PHP el rechazo de campos escalares duplicados del formulario normal. La publicación de las aplicaciones nuevas en Apache :80 y Tomcat :8080 sigue pendiente por permisos y lectura de `appBase`; las aplicaciones previas en `/var/www/html/lab09-php` y `/var/lib/tomcat10/webapps/lab09-jsp` se conservaron.
 
 Entorno documentado en fase 1: Linux Mint 22.2; Apache 2.4.58 en puerto 80 y DocumentRoot `/var/www/html`; Tomcat 10.1.55 en puerto 8080, `CATALINA_BASE=/var/lib/tomcat10`; PHP 8.3.6 y módulo Apache `php_module`. Se comprobó ejecución PHP por HTTP y compilación JSP por Tomcat aislado en puerto 18081. El valor literal de `appBase` en el `server.xml` del servicio sigue pendiente de lectura privilegiada; los logs muestran despliegues existentes desde `/var/lib/tomcat10/webapps`. Véase [entorno.md](docs/entorno.md).
 
@@ -25,6 +25,7 @@ lab09-contactos/
 │   ├── contrato-funcional.md
 │   ├── fase-02-php.md
 │   ├── fase-03-jsp.md
+│   ├── pruebas.md
 │   └── evidencias/.gitkeep
 ├── scripts/diagnostico.sh
 ├── README.md
@@ -41,7 +42,7 @@ La URL `http://127.0.0.1:18080/index.html` **sí respondió 200** durante las pr
 
 El formulario envía `POST` a `registro.php`; PHP valida los datos antes de abrir la sesión, agrega el contacto en `$_SESSION['registros']` y muestra la tabla escapando los datos al generar HTML. Las entradas inválidas reciben 400; métodos distintos de POST reciben 405 con `Allow: POST`.
 
-La revisión visual y las capturas de PHP y su publicación permanente continúan pendientes; la comparación y auditoría conjunta corresponden a la fase 4.
+La aplicación PHP nueva continúa disponible en el Apache temporal; la URL del servicio :80 sigue devolviendo 404. La revisión visual de ambas aplicaciones y las capturas de ensayo se registran en `docs/pruebas.md`.
 
 ## JSP: despliegue y pruebas
 
@@ -49,4 +50,4 @@ El código fuente está en `jsp-app/`. Tomcat 10.1.55 compiló y atendió las JS
 
 Tomcat no incluye JSTL aquí: `registro.jsp` valida el POST, conserva registros en `session` y escapa HTML al mostrar la tabla. Un filtro Jakarta limitado a `/registro.jsp` responde 405 con `Allow: POST` para los métodos que Jasper interceptaría antes de la JSP. Es necesario compilarlo con el `servlet-api.jar` de Tomcat antes de empaquetar la aplicación. Comandos de compilación, publicación, pruebas, logs y capturas: [docs/fase-03-jsp.md](docs/fase-03-jsp.md).
 
-Siguen pendientes la revisión visual y las capturas; la comparación exhaustiva y auditoría conjunta corresponden a la fase 4.
+**Resultados de fase 4:** [matriz, diferencias, capturas y bloqueos](docs/pruebas.md). Las pruebas aprobadas corresponden a los puertos temporales; faltan publicación y repetición de QA en :80/:8080.

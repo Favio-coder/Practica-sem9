@@ -1,0 +1,20 @@
+FASE 4 — extracto filtrado de logs reales, sin cookies ni datos de usuarios.
+
+Apache de ensayo :18080, /tmp/opencode/lab09-apache-error.log:
+[Thu Oct 29 09:53:03.662690 2026] [mpm_prefork:notice] [pid 18799] AH00163: Apache/2.4.58 (Ubuntu) configured -- resuming normal operations
+[Thu Oct 29 09:53:03.662742 2026] [core:notice] [pid 18799] AH00094: Command line: 'apache2 -f /tmp/opencode/lab09-apache.conf'
+Sin entradas de error nuevas atribuibles a los POST válidos de esta fase.
+
+Tomcat de ensayo :18081, /tmp/opencode/tomcat-fis/logs/catalina.out:
+29-Oct-2026 10:05:30.395 INFORMACIÓN [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/tmp/opencode/tomcat-fis/webapps/biblioteca-fis] has finished in [1.146] ms
+29-Oct-2026 10:08:30.914 INFORMACIÓN [Catalina-utility-1] org.apache.catalina.startup.HostConfig.reload Falló la recarga del contexto [/biblioteca-fis]
+29-Oct-2026 10:08:31.426 INFORMACIÓN [Catalina-utility-1] org.apache.catalina.core.StandardContext.reload Se ha completado la recarga de este Contexto
+29-Oct-2026 10:25:12.450 INFORMACIÓN [Catalina-utility-2] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/tmp/opencode/tomcat-fis/webapps/qa04-500] has finished in [780] ms
+29-Oct-2026 10:25:52.957 INFORMACIÓN [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Repliegue (undeploy) de la aplicación web que tiene como trayectoria de contexto [/qa04-500]
+
+La recarga fallida a las 10:08 pertenece a la instalación incompleta de fase 3,
+antes de compilar el filtro; fue seguida de recarga completada. En las pruebas
+de fase 4 no se observaron nuevos errores de compilación JSP ni excepciones
+por solicitudes válidas. El contexto aislado de 500 fue retirado.
+Los logs del Tomcat principal :8080 no registran el despliegue nuevo, que
+sigue pendiente; estas líneas no acreditan despliegue allí.

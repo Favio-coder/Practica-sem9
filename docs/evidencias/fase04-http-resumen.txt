@@ -1,0 +1,25 @@
+FASE 4 — extracto de salidas curl, 2026-10-29. No contiene Set-Cookie ni IDs.
+Aplicaciones nuevas probadas sobre servidores aislados del equipo accesible.
+
+PHP formulario 200 text/html
+PHP GET registro 405 Allow:POST
+PHP duplicado 400
+PHP 404 404
+JSP formulario 200 text/html;charset=UTF-8
+JSP GET registro 405 Allow:POST
+JSP duplicado 400
+JSP 404 404
+PHP servicio :80 404
+JSP servicio :8080 404
+PHP 500 aislado 500 text/html; charset=UTF-8
+Mensaje genérico: True ; traza ausente: True
+
+Matriz de comprobación con curl y ficheros temporales de cookies (cuerpos y
+cabeceras inspeccionados; cookies eliminadas al finalizar):
+RESUMEN: 46 aprobadas, 0 fallidas; cookies y cuerpos temporales borrados.
+Además, el contexto JSP /qa04-500 de ensayo devolvió 500 con el mensaje
+«Servicio no disponible», sin excepción ni ruta interna en el cuerpo.
+
+Logo en ambas fuentes (SHA-256):
+9a5db561bbbe4b7cd1335a431632841f9030f61f3c2d91023f0b1be6b710cbd2  php-app/assets/img/Fis.png
+9a5db561bbbe4b7cd1335a431632841f9030f61f3c2d91023f0b1be6b710cbd2  jsp-app/assets/img/Fis.png
