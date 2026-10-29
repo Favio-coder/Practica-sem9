@@ -1,0 +1,13 @@
+# Archivos locales generados por editores, SO y ejecución del laboratorio.
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+*.log
+*.class
+target/
+build/
+WEB-INF/classes/
+# Las evidencias forman parte de la entrega, incluidos logs de prueba.
+!/docs/evidencias/**
